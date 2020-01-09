@@ -1,0 +1,19 @@
+[push]
+	default = simple
+[user]
+	name = Justin Ginn
+	email = Justindavid.ginn@gmail.com
+	name = Justin Ginn
+	name = justindavid.ginn@gmail.com
+[diff]
+	tool = vimdiff
+[core]
+	editor = vim
+[status]
+	showUntrackedFiles = no
+[alias]
+    s = "status -uno"
+    d = difftool
+    dn = "diff --name-only "
+    diffn = diff --name-only
+
