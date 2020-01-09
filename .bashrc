@@ -57,6 +57,6 @@ umask 0000
 echo "umask setting:"
 umask
 
-
-
+# Special config repo storing dotfiles
+# Called with 'config' instead of 'git'
 alias config='/usr/bin/git --git-dir=/Users/justinginn/.cfg/ --work-tree=/Users/justinginn'
