@@ -4,7 +4,7 @@ export INPUTRC=~/.inputrc
 # Suppress nagging message in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-#export PATH=$PATH:~/Library/Python/3.7/bin
+export PATH=$PATH:~/Library/Python/3.7/bin:/usr/local/bin
 
 # vi mode for all bash functionality
 set -o vi
