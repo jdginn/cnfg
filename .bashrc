@@ -9,6 +9,7 @@ export PATH=$PATH:~/Library/Python/3.7/bin:/usr/local/bin
 
 # vi mode for all bash functionality
 set -o vi
+export EDITOR=vim
 
 ######## - basic niceities - ########
 
