@@ -74,4 +74,4 @@ fi
 
 # Special config repo storing dotfiles
 # Called with 'config' instead of 'git'
-alias config='/usr/bin/git --git-dir=/Users/justinginn/.cfg/ --work-tree=/Users/justinginn'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
