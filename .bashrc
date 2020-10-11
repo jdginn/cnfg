@@ -49,6 +49,9 @@ function ni { nvim ~/.config/nvim/init.vim
 ###################################
 
 ######## - git magic - ######## 
+# Special config repo storing dotfiles
+# Called with 'config' instead of 'git'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 function gitconfig { vim ~/.gitconfig
 }
@@ -59,6 +62,40 @@ git log --pretty="format:%at %C(yellow)commit %H%Creset\nAuthor: %an <%ae>\nDate
 
 function branch_recent {
 for branch in `git branch | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r
+}
+
+# Update local clone to mtach a branch
+function uh {
+	if [ $PWD == $HOME ]; then
+		cmd="config"
+	else
+		cmd="git"
+	fi
+
+	if [ -z $1 ]; then
+		remote="origin"
+	else
+		remote=$1
+	fi
+
+	if [ -z $2 ]; then
+		branch="master"
+	else
+		branch="$2"
+	fi
+
+	if [[ $(eval $cmd diff --stat) != '' ]]; then
+		echo "Local changes will be overwritten - continue? y/n"
+		read override
+		if [[ $override != "y" && $override != "Y" ]]; then
+			echo "Aborting"
+			return
+		fi
+	fi
+
+	echo "Upading local contents to match $remote/$branch"
+	eval $cmd fetch
+	eval $cmd reset --hard $remote/$branch
 }
 
 umask 0000
@@ -72,6 +109,3 @@ if [ -f $HOME/.bashrc_aliases ]; then
     . $HOME/.bashrc_aliases
 fi
 
-# Special config repo storing dotfiles
-# Called with 'config' instead of 'git'
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
