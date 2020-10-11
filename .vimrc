@@ -47,6 +47,7 @@ filetype plugin indent on    " required
 
 "gruvbox configuration
 colorscheme gruvbox
+set background=dark
 let g:gruvbox_contrast_dark = 'hard'
 set t_Co=256
 syntax on
@@ -90,7 +91,7 @@ nnoremap <C-H> <C-W><C-H>
 
 "guideline for how long a line should be
 set colorcolumn=72,100
-highlight ColorColumn ctermbg=grey
+highlight ColorColumn ctermbg=DarkGrey ctermfg=white
 
 "misc
 set showmatch
