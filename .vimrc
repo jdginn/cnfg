@@ -62,6 +62,7 @@ let mapleader = ","
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set expandtab
 
 "fold with spacebar instead of za
 nnoremap <space> za
@@ -79,6 +80,9 @@ au BufNewFile, BufRead *.py
     "highlight python issues
     \ let python_highlight_all=1
     \ syntax on
+
+"set up indentation for java
+autocmd Filetype java setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent
 
 "flag bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red

@@ -4,8 +4,6 @@ call plug#begin()
 Plug 'morhetz/gruvbox'
 "	Folding for methods and classes
 Plug 'tmhedberg/SimpylFold'
-"  Better auto-indentation for python
-Plug 'vim-scripts/indentpython.vim'
 "  Status bar
 Plug 'vim-airline/vim-airline'
 "  Close parenthesis/brackets
@@ -17,16 +15,27 @@ Plug 'tweekmonster/startuptime.vim'
 "  Git support
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-"  Additional syntax support
-"Plug 'sheerun/vim-polyglot'
+"  Better merge conflit resolution
+Plug 'christoomey/vim-conflicted'
+"  More careful vimdiff - only applicable to vim?
+"Plug chrisbra/vim-diff-enhanced
+"  Quickly add comments
+Plug 'tpope/vim-commentary'
 
 "  Linting
-"Plug 'w0rp/ale', { 'on' : 'ALELint' }
 Plug 'w0rp/ale'
 
 "  Code completion
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"  Additional syntax support
+Plug 'sheerun/vim-polyglot'
+
+"  Better auto-indentation for python
+Plug 'vim-scripts/indentpython.vim'
+"  Alternate between source and headers in C/C++
+Plug 'ton/vim-alternate'
+
+
 "Plug 'neomake/neomake'
 
 call plug#end()
@@ -90,6 +99,7 @@ set nu
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set expandtab
 
 "fold with spacebar instead of za
 nnoremap <space> za
@@ -107,6 +117,9 @@ au BufNewFile, BufRead *.py
     "highlight python issues
     \ let python_highlight_all=1
     \ syntax on
+
+"set up indentation for java
+autocmd Filetype java setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent
 
 "flag bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
