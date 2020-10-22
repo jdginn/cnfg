@@ -25,7 +25,7 @@ function cl {
 
 function bashrc {
 	vim ~/.bashrc
-	bash
+    source ~/.bashrc	
 }
 
 
@@ -62,6 +62,25 @@ git log --pretty="format:%at %C(yellow)commit %H%Creset\nAuthor: %an <%ae>\nDate
 
 function branch_recent {
 for branch in `git branch | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r
+}
+
+# Use rsync to sync local contents to a remote clone
+# Because rsync only copies diffs between files, it's the fastest way
+function reposync {
+    repo=$1
+    remote=$2
+    dest=$3
+    startup=$4
+    echo "Enter password"
+    stty -echo
+    read paswd
+    stty echo
+    # compress files, recursive copy, preserve symlinks, permissions, and timestamps \
+    # exclude everything git is ignoring
+    #echo $paswd > rsync -zirlptD --delete-after --exclude=.git \
+    rsync -zirlptD --delete-after \
+        $(git -C $repo ls-files --exclude-standard -oi --directory | while read a; do echo -n \"--exclude=$a \"; done) \
+        $repo $remote:$dest
 }
 
 # Update local clone to mtach a branch
