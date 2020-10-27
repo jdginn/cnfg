@@ -80,6 +80,19 @@ au BufNewFile, BufRead *.py
     \ let python_highlight_all=1
     \ syntax on
 
+"set up indentation for xml
+au BufNewFile, BufRead *.xml
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+    \ set encoding=utf-8
+    "highlight python issues
+    \ let python_highlight_all=1
+    \ syntax on
 "flag bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
 
