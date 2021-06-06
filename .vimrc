@@ -62,6 +62,7 @@ let mapleader = ","
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set expandtab
 
 "fold with spacebar instead of za
 nnoremap <space> za
@@ -107,6 +108,8 @@ au BufNewFile, BufRead *.yaml
     "highlight python issues
     \ let python_highlight_all=1
     \ syntax on
+"set up indentation for java
+autocmd Filetype java setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent
 
 "flag bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
@@ -118,11 +121,12 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 "guideline for how long a line should be
-set colorcolumn=72,100
+set colorcolumn=100
 highlight ColorColumn ctermbg=DarkGrey ctermfg=white
 
 "misc
 set showmatch
+set hlsearch
 
 "configuring flake8
 let g:flake8_cmd="/afs/apd.pok.ibm.com/u/jdginn/.local/bin/flake8"

@@ -11,6 +11,9 @@ export PATH=$PATH:~/Library/Python/3.7/bin:/usr/local/bin
 set -o vi
 export EDITOR=vim
 
+# Browser for when we want it
+export BROWSER=lynx
+
 ######## - basic niceities - ########
 
 # Open last-edited file
@@ -25,7 +28,7 @@ function cl {
 
 function bashrc {
 	vim ~/.bashrc
-	bash
+    source ~/.bashrc	
 }
 
 function basha {
@@ -51,6 +54,9 @@ function vimrc { vim ~/.vimrc
 function ni { nvim ~/.config/nvim/init.vim
 }
 
+function spacevim { nvim -u ~/.SpaceVim/vimrc
+}
+
 ###################################
 
 ######## - git magic - ######## 
@@ -61,12 +67,34 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 function gitconfig { vim ~/.gitconfig
 }
 
+function tc { vim ~/.tmux.conf
+}
+
 function gitl {
 git log --pretty="format:%at %C(yellow)commit %H%Creset\nAuthor: %an <%ae>\nDate: %aD\n\n %s\n" | sort -r | cut -d" " -f2- | sed -e "s/\\\n/\\`echo -e '\n\r'`/g" | tr -d '\15\32' | less -R
 }
 
 function branch_recent {
 for branch in `git branch | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r
+}
+
+# Use rsync to sync local contents to a remote clone
+# Because rsync only copies diffs between files, it's the fastest way
+function reposync {
+    repo=$1
+    remote=$2
+    dest=$3
+    startup=$4
+    echo "Enter password"
+    stty -echo
+    read paswd
+    stty echo
+    # compress files, recursive copy, preserve symlinks, permissions, and timestamps \
+    # exclude everything git is ignoring
+    #echo $paswd > rsync -zirlptD --delete-after --exclude=.git \
+    rsync -zirlptD --delete-after --exclude=.git \
+        $(git -C $repo ls-files --exclude-standard -oi --directory | while read a; do echo -n \"--exclude=$a \"; done) \
+        $repo $remote:$dest
 }
 
 # Update local clone to mtach a branch

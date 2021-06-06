@@ -19,15 +19,23 @@ Plug 'RRethy/vim-illuminate'
 "  Git support
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-"  Additional syntax support
-Plug 'sheerun/vim-polyglot'
+"  Better merge conflit resolution
+Plug 'christoomey/vim-conflicted'
 
 "  Linting
 Plug 'w0rp/ale'
 
 "  Code completion
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"  Additional syntax support
+Plug 'sheerun/vim-polyglot'
+
+"  Better auto-indentation for python
+Plug 'vim-scripts/indentpython.vim'
+"  Alternate between source and headers in C/C++
+Plug 'ton/vim-alternate'
+
+
 "Plug 'neomake/neomake'
 
 call plug#end()
@@ -93,9 +101,16 @@ syntax on
 set nu
 
 "generic tab behavior
+<<<<<<< HEAD
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+=======
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+>>>>>>> a201f1dedce316b2fde749f7f2a5fbcb087abdaf
 
 "fold with spacebar instead of za
 nnoremap <space> za
@@ -113,6 +128,9 @@ au BufNewFile, BufRead *.py
     "highlight python issues
     \ let python_highlight_all=1
     \ syntax on
+
+"set up indentation for java
+autocmd Filetype java setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent
 
 "flag bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
