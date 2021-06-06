@@ -1,27 +1,28 @@
 "-------- VimPlug config -----
 call plug#begin()
 "	Fancy colorsheme
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
+Plug 'mhartington/oceanic-next'
 "	Folding for methods and classes
-Plug 'tmhedberg/SimpylFold'
+"Plug 'tmhedberg/SimpylFold'
+Plug 'Konfekt/FastFold'
 "  Better auto-indentation for python
 Plug 'vim-scripts/indentpython.vim'
-"  Status bar
+""  Status bar
 Plug 'vim-airline/vim-airline'
 "  Close parenthesis/brackets
 Plug 'Raimondi/delimitMate'
 "  Highlight other occurances of this item
 Plug 'RRethy/vim-illuminate'
 "  Profile startup time
-Plug 'tweekmonster/startuptime.vim'
+"Plug 'tweekmonster/startuptime.vim'
 "  Git support
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "  Additional syntax support
-"Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
 "  Linting
-"Plug 'w0rp/ale', { 'on' : 'ALELint' }
 Plug 'w0rp/ale'
 
 "  Code completion
@@ -30,6 +31,9 @@ Plug 'w0rp/ale'
 "Plug 'neomake/neomake'
 
 call plug#end()
+
+"  ------- FastFold ---------
+let g:python_fold = 1
 
 "  ------- ALE options --------
 "  ALE integration with airline
@@ -78,8 +82,10 @@ nmap <silent> <C-b> <Plug>(ale_previous_wrap)
 
 "  ------- Misc config --------
 "gruvbox configuration
-colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'hard'
+"colorscheme gruvbox
+"let g:gruvbox_contrast_dark = 'hard'
+colorscheme OceanicNext
+let g:airline_theme='oceanicnext'
 set t_Co=256
 syntax on
 
@@ -87,9 +93,9 @@ syntax on
 set nu
 
 "generic tab behavior
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 "fold with spacebar instead of za
 nnoremap <space> za

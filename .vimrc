@@ -28,7 +28,7 @@ Plugin 'RRethy/vim-illuminate'
 "  Force myself to follow PEP 8
 "Plugin 'nvie/vim-flake8'
 "  Fancy comment blocks
-Plugin 'cometsong/commentframe.vim'
+" Plugin 'cometsong/commentframe.vim'
 "  Quick commenting
 Plugin 'scrooloose/nerdcommenter'
 
@@ -93,6 +93,21 @@ au BufNewFile, BufRead *.xml
     "highlight python issues
     \ let python_highlight_all=1
     \ syntax on
+
+"set up indentation for yaml
+au BufNewFile, BufRead *.yaml
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+    \ set encoding=utf-8
+    "highlight python issues
+    \ let python_highlight_all=1
+    \ syntax on
+
 "flag bad whitespace
 highlight BadWhitespace ctermbg=red guibg=red
 
