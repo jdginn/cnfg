@@ -28,7 +28,7 @@ Plugin 'RRethy/vim-illuminate'
 "  Force myself to follow PEP 8
 "Plugin 'nvie/vim-flake8'
 "  Fancy comment blocks
-Plugin 'cometsong/commentframe.vim'
+" Plugin 'cometsong/commentframe.vim'
 "  Quick commenting
 Plugin 'scrooloose/nerdcommenter'
 
@@ -81,6 +81,33 @@ au BufNewFile, BufRead *.py
     \ let python_highlight_all=1
     \ syntax on
 
+"set up indentation for xml
+au BufNewFile, BufRead *.xml
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+    \ set encoding=utf-8
+    "highlight python issues
+    \ let python_highlight_all=1
+    \ syntax on
+
+"set up indentation for yaml
+au BufNewFile, BufRead *.yaml
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+    \ set encoding=utf-8
+    "highlight python issues
+    \ let python_highlight_all=1
+    \ syntax on
 "set up indentation for java
 autocmd Filetype java setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent
 

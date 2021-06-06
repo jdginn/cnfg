@@ -31,6 +31,11 @@ function bashrc {
     source ~/.bashrc	
 }
 
+function basha {
+	vim ~/.bashrc_aliases
+	bash
+}
+
 
 # setup arrow keys to work with emacs line editor in ksh
 alias __A=
