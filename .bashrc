@@ -11,6 +11,9 @@ export PATH=$PATH:~/Library/Python/3.7/bin:/usr/local/bin
 set -o vi
 export EDITOR=vim
 
+# Browser for when we want it
+export BROWSER=lynx
+
 ######## - basic niceities - ########
 
 # Open last-edited file
@@ -46,6 +49,9 @@ function vimrc { vim ~/.vimrc
 function ni { nvim ~/.config/nvim/init.vim
 }
 
+function spacevim { nvim -u ~/.SpaceVim/vimrc
+}
+
 ###################################
 
 ######## - git magic - ######## 
@@ -54,6 +60,9 @@ function ni { nvim ~/.config/nvim/init.vim
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 function gitconfig { vim ~/.gitconfig
+}
+
+function tc { vim ~/.tmux.conf
 }
 
 function gitl {
@@ -78,7 +87,7 @@ function reposync {
     # compress files, recursive copy, preserve symlinks, permissions, and timestamps \
     # exclude everything git is ignoring
     #echo $paswd > rsync -zirlptD --delete-after --exclude=.git \
-    rsync -zirlptD --delete-after \
+    rsync -zirlptD --delete-after --exclude=.git \
         $(git -C $repo ls-files --exclude-standard -oi --directory | while read a; do echo -n \"--exclude=$a \"; done) \
         $repo $remote:$dest
 }
