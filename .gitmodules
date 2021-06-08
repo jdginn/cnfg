@@ -1,3 +1,3 @@
 [submodule ".tmux"]
 	path = .tmux
-	url = /Users/justinginn/.tmux
+	url = https://github.com/jdginn/.tmux
