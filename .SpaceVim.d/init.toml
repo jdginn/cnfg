@@ -24,20 +24,25 @@
     enable_tabline_filetype_icon = true
     enable_statusline_mode = false
 
-# Enable autocomplete layer
 [[layers]]
-name = 'autocomplete'
+name = "default"
+
+[[layers]]
+name = "autocomplete"
 auto_completion_return_key_behavior = "complete"
 auto_completion_tab_key_behavior = "smart"
 
 [[layers]]
-name = 'shell'
-default_position = 'top'
+name = "shell"
+default_position = "top"
 default_height = 30
 
 [[layers]]
-name = 'git'
-git_plugin = 'fugitive'
+name = "git"
+git_plugin = "fugitive"
 
 [[layers]]
-name = 'lang#python'
+name = "lang#python"
+
+[[custom_plugins]]
+repo  = "tmhedberg/SimpylFold"
