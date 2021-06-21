@@ -16,9 +16,9 @@ function! myspacevim#before() abort
     set nocompatible
     " Enable plugins
     filetype plugin on
+    let g:spacevim_relativenumber = 0
 endfunction
 
 function! myspacevim#after() abort
     let g:spacevim_relativenumber = 0
-    let g:netrw_silent = 0
 endfunction

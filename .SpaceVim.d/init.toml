@@ -46,6 +46,9 @@ git_plugin = "fugitive"
 [[layers]]
 name = "lang#python"
 
+[[layers]]
+name = "mirror"
+silent = 1
+
 [[custom_plugins]]
 repo  = "tmhedberg/SimpylFold"
-repo  = "zenbro/mirror.vim"
