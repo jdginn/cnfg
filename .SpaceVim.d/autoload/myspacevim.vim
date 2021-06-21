@@ -9,11 +9,16 @@ function! myspacevim#before() abort
     nnoremap <tab> za
     " Make the clipboard work
     set clipboard+=unnamed
-    "guideline for how long a line should be
+    " guideline for how long a line should be
     set colorcolumn=100
     highlight ColorColumn ctermbg=DarkGrey ctermfg=white
+    " Disable backward compatibility with vi
+    set nocompatible
+    " Enable plugins
+    filetype plugin on
 endfunction
 
 function! myspacevim#after() abort
     let g:spacevim_relativenumber = 0
+    let g:netrw_silent = 0
 endfunction
