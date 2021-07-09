@@ -1,3 +1,11 @@
+
+" Jenkinsfile
+autocmd BufRead,BufNewFile Jenkinsfile set ft=groovy
+autocmd BufRead,BufNewFile Jenkinsfile* setf groovy
+autocmd BufRead,BufNewFile *.jenkinsfile set ft=Jenkinsfile
+autocmd BufRead,BufNewFile *.jenkinsfile setf groovy
+autocmd BufRead,BufNewFile *.Jenkinsfile setf groovy
+
 function! myspacevim#before() abort
     " Shorten time between pressing space and the hint buffer appearing
     set timeoutlen=150
