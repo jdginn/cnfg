@@ -35,6 +35,10 @@ auto_completion_return_key_behavior = "complete"
 auto_completion_tab_key_behavior = "smart"
 
 [[layers]]
+name = "checkers"
+show_cursor_error = true
+
+[[layers]]
 name = "shell"
 default_position = "top"
 default_height = 30
@@ -45,6 +49,16 @@ git_plugin = "fugitive"
 
 [[layers]]
 name = "lang#python"
+enabled_linters = ['python', 'pylint']
+
+[[layers]]
+name = "lang#groovy"
+
+[[layers]]
+name = "lang#rust"
+format_on_save = true
+recommended_style = true
+racer_cmd = ''
 
 [[layers]]
 name = "mirror"
