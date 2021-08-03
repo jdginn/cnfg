@@ -141,4 +141,4 @@ umask 0000
 if [ -f $HOME/.bashrc_aliases ]; then
     . $HOME/.bashrc_aliases
 fi
-
+. "$HOME/.cargo/env"
