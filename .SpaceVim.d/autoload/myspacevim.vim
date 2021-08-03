@@ -6,6 +6,10 @@ autocmd BufRead,BufNewFile *.jenkinsfile set ft=Jenkinsfile
 autocmd BufRead,BufNewFile *.jenkinsfile setf groovy
 autocmd BufRead,BufNewFile *.Jenkinsfile setf groovy
 
+" YAML
+"Get the 2-space YAML as the default when hit carriage return after the colon
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
 function! myspacevim#before() abort
     " Shorten time between pressing space and the hint buffer appearing
     set timeoutlen=150
