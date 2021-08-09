@@ -105,7 +105,6 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
->>>>>>> a201f1dedce316b2fde749f7f2a5fbcb087abdaf
 
 "fold with spacebar instead of za
 nnoremap <space> za
