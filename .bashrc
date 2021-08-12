@@ -51,7 +51,7 @@ alias __H=
 function vimrc { vim ~/.vimrc
 }
 
-function ni { nvim ~/.config/nvim/init.vim
+function ni { nvim ~/.config/nvim/init.lua
 }
 
 function spacevim { nvim -u ~/.SpaceVim/vimrc

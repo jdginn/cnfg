@@ -39,6 +39,13 @@ lvim.builtin.treesitter.ensure_installed = {}
 -- lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
+-- faster performance for LSP
+lvim.lsp.diagnostics.update_in_insert = false
+lvim.lang.lua.formatter = { { exe = "" }}
+lvim.lang.lua.linters = {{ exe = "" }}
+lvim.lang.sh.formatter = { { exe = "" }}
+lvim.lang.sh.linters = {{ exe = "" }}
+
 -- generic LSP settings
 -- you can set a custom on_attach function that will be used for all the language servers
 -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -51,13 +58,17 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- end
 
 -- Additional Plugins
--- lvim.plugins = {
---     {"lunarvim/colorschemes"},
---     {'Murtaza-Udaipurwala/gruvqueen'}
--- }
 lvim.plugins = {
-    {"eddyekofo94/gruvbox-flat.nvim"},
+    {"jdginn/gruvbox-flat.nvim"},
 }
+
+-- Fold settings
+-- require('fold').setup({
+--   enable = 'zz',
+--   toggle = 'z',
+--   context = 5,
+--   tail = 100,
+-- })
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
