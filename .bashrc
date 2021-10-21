@@ -142,3 +142,6 @@ if [ -f $HOME/.bashrc_aliases ]; then
     . $HOME/.bashrc_aliases
 fi
 . "$HOME/.cargo/env"
+
+# added by travis gem
+[ ! -s /Users/justinginn/.travis/travis.sh ] || source /Users/justinginn/.travis/travis.sh
