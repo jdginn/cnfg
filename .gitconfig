@@ -1,0 +1,36 @@
+[push]
+	default = simple
+[user]
+	name = Justin Ginn
+	email = Justindavid.ginn@gmail.com
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    side-by-side = true
+    syntax-theme = gruvbox-dark
+    theme = gruvbox-dark
+    navigate = true
+    true-color = always
+    colorMoved = default
+[diff]
+    tool = vimdiff
+[interactive]
+    diffFIlter = delta --color-only
+[core]
+	editor = vim
+[status]
+	showUntrackedFiles = no
+[alias]
+    s = "status -uno"
+    d = difftool
+    dn = "diff --name-only "
+    diffn = diff --name-only
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

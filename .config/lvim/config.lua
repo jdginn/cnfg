@@ -59,7 +59,7 @@ lvim.lang.python.lsp = {
           analysis = {
             autoSearchPaths = false,
             diagnosticMode = 'openFilesOnly',
-            useLibraryCodeForTypes = false
+            useLibraryCodeForTypes = true
           }
         }
       }
