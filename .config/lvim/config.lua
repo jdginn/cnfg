@@ -36,35 +36,35 @@ lvim.lang.python.formatters = {
   }
 }
 
-local lsp = require'lsp'
-local common_on_attach = lsp.common_on_attach
-local common_capabilities = lsp.common_capabilities()
-local common_on_init = lsp.common_on_init
-lvim.lang.python.lsp = {
-    provider = "pyright",
-    setup = {
-      cmd = {
-        DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
-        "--stdio",
-      },
-      -- pyright is our primary server but we want to use a couple features from pylsp instead
-      on_attach = common_on_attach,
-      on_init = common_on_init,
-      capabilities = common_capabilities,
-      flags = {
-        debounce_text_changes = 500
-      },
-      settings = {
-        python = {
-          analysis = {
-            autoSearchPaths = false,
-            diagnosticMode = 'openFilesOnly',
-            useLibraryCodeForTypes = true
-          }
-        }
-      }
-    }
-}
+-- local lsp = require'lsp'
+-- local common_on_attach = lsp.common_on_attach
+-- local common_capabilities = lsp.common_capabilities()
+-- local common_on_init = lsp.common_on_init
+-- lvim.lang.python.lsp = {
+--     provider = "pyright",
+--     setup = {
+--       cmd = {
+--         DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
+--         "--stdio",
+--       },
+--       -- pyright is our primary server but we want to use a couple features from pylsp instead
+--       on_attach = common_on_attach,
+--       on_init = common_on_init,
+--       capabilities = common_capabilities,
+--       flags = {
+--         debounce_text_changes = 500
+--       },
+--       settings = {
+--         python = {
+--           analysis = {
+--             autoSearchPaths = false,
+--             diagnosticMode = 'openFilesOnly',
+--             useLibraryCodeForTypes = true
+--           }
+--         }
+--       }
+--     }
+-- }
 
 -- Additional Plugins
 lvim.plugins = {

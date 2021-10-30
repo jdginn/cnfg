@@ -1,0 +1,11 @@
+# List the aliases we have currently loaded
+export ALIASES=$ALIASES:macbook
+
+####### - paths for this machine - #########
+
+####### - network protocols - ########
+alias ubuntu='qemu-system-x86_64 -machine type=q35,accel=hvf -smp 6 -hda ~/ibm/ubuntu-20.04.1-desktop-amd64.qcow2 -m 8G -vga virtio -usb -device usb-tablet -display default,show-cursor=on -net user,hostfwd=tcp::10022-:22 -net nic'
+
+alias sshubuntu='ssh localhost -p 10022'
+
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
