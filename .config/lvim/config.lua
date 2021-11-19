@@ -18,8 +18,11 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 0
 
-lvim.builtin.treesitter.ensure_installed = {"python", "lua"}
+lvim.builtin.treesitter.ensure_installed = {"python", "lua", "rust"}
 lvim.builtin.treesitter.highlight.enabled = true
+
+vim.api.nvim_command("set foldmethod=expr")
+vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 
 ----- LSP config ----
 -- Configure linter and formatter first so they will be picked up when we do the default config for pyright
@@ -70,6 +73,7 @@ lvim.lang.python.formatters = {
 lvim.plugins = {
   {"jdginn/gruvbox-flat.nvim"},
   {"tmhedberg/SimpylFold"},
+  {"simrat39/rust-tools.nvim"}
   -- {"tpope/vim-fugitive"}
 }
 
@@ -120,6 +124,8 @@ lvim.plugins = {
 -- Uncomment this to use our familiar friend gruvbox
 lvim.colorscheme = "gruvbox-flat"
 vim.g.gruvbox_flat_style = "hard"
+
+require('rust-tools').setup({})
 
 -- SimpylFold configuration
 -- Fold/unfold with tab instead of zo/zc
