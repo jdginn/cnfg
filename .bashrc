@@ -4,6 +4,10 @@ export INPUTRC=~/.inputrc
 # Suppress nagging message in macos
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# Command line
+export PS1="\u@\h:[\w]:\n$ "
+#export PS1="[\w]:\n$ "
+
 #TODO: this should really be host-specific
 export PATH=$PATH:~/Library/Python/3.7/bin:/usr/local/bin
 
@@ -12,7 +16,7 @@ set -o vi
 export EDITOR=vim
 
 # Browser for when we want it
-export BROWSER=lynx
+export BROWSER=firefox
 
 ######## - basic niceities - ########
 
@@ -63,6 +67,8 @@ function spacevim { nvim -u ~/.SpaceVim/vimrc
 # Special config repo storing dotfiles
 # Called with 'config' instead of 'git'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+source ~/git-completion.bash
 
 function gitconfig { vim ~/.gitconfig
 }

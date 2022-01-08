@@ -2,6 +2,7 @@
 export ALIASES=$ALIASES:macbook
 
 ####### - paths for this machine - #########
+export PATH=/Users/apple/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/apple/Library/Python/3.7/bin:/usr/local/bin:/Users/apple/Library/Python/3.7/bin:/usr/local/bin:/Users/apple/Library/Python/3.7/bin:/usr/local/bin:/Users/apple/Library/Python/3.7/bin:/usr/local/bin:/usr/local/opt/llvm/bin:/Users/apple/go/bin
 
 ####### - network protocols - ########
 alias ubuntu='qemu-system-x86_64 -machine type=q35,accel=hvf -smp 6 -hda ~/ibm/ubuntu-20.04.1-desktop-amd64.qcow2 -m 8G -vga virtio -usb -device usb-tablet -display default,show-cursor=on -net user,hostfwd=tcp::10022-:22 -net nic'
