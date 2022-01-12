@@ -18,56 +18,22 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 0
 
-lvim.builtin.treesitter.ensure_installed = {"python", "lua", "rust"}
+lvim.builtin.treesitter.ensure_installed = {
+  "bash",
+  "c",
+  "golang",
+  "json",
+  "lua",
+  "python",
+  "rust",
+  "yaml",
+}
+
+lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.treesitter.highlight.enabled = true
 
 vim.api.nvim_command("set foldmethod=expr")
 vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
-
------ LSP config ----
--- Configure linter and formatter first so they will be picked up when we do the default config for pyright
--- lvim.lang.python.linters = {
---   {
---     exe = "pylint",
---     timeout = 77777777777,
---   }
--- }
-
-lvim.lang.python.formatters = {
-  {
-    exe = "yapf",
-  }
-}
-
--- local lsp = require'lsp'
--- local common_on_attach = lsp.common_on_attach
--- local common_capabilities = lsp.common_capabilities()
--- local common_on_init = lsp.common_on_init
--- lvim.lang.python.lsp = {
---     provider = "pyright",
---     setup = {
---       cmd = {
---         DATA_PATH .. "/lspinstall/python/node_modules/.bin/pyright-langserver",
---         "--stdio",
---       },
---       -- pyright is our primary server but we want to use a couple features from pylsp instead
---       on_attach = common_on_attach,
---       on_init = common_on_init,
---       capabilities = common_capabilities,
---       flags = {
---         debounce_text_changes = 500
---       },
---       settings = {
---         python = {
---           analysis = {
---             autoSearchPaths = false,
---             diagnosticMode = 'openFilesOnly',
---             useLibraryCodeForTypes = true
---           }
---         }
---       }
---     }
--- }
 
 -- Additional Plugins
 lvim.plugins = {
@@ -76,50 +42,6 @@ lvim.plugins = {
   {"simrat39/rust-tools.nvim"}
   -- {"tpope/vim-fugitive"}
 }
-
--- In general pyright is superior to pylsp but occasionally it's finicky for project-wide rename and reference lookup
--- pylsp is capable of this we use it for those functionalities only
--- require'lspconfig'.pylsp.setup{
---       on_init = function(client)
---         local resolved_capabilities = client.resolved_capabilities
---         resolved_capabilities.call_hierarchy = false
---         resolved_capabilities.code_action = false
---         resolved_capabilities.code_lens = false
---         resolved_capabilities.code_lens_resolve = false
---         resolved_capabilities.completion = false
---         resolved_capabilities.declaration = false
---         resolved_capabilities.document_formatting = false
---         resolved_capabilities.document_highlight = false
---         resolved_capabilities.document_range_formatting = false
---         resolved_capabilities.document_symbol = false
---         resolved_capabilities.execute_command = false
---         resolved_capabilities.find_references = true
---         resolved_capabilities.goto_definition = false
---         resolved_capabilities.hover = false
---         resolved_capabilities.implementation = false
---         resolved_capabilities.rename = true
---         resolved_capabilities.signature_help = false
---         -- resolved_capabilities.signature_help_trigger_characters = { "(" ",", "=" },
---         resolved_capabilities.text_document_did_change = 2
---         resolved_capabilities.text_document_open_close = false
---         resolved_capabilities.text_document_save = {
---           includeText = false
---         }
---         resolved_capabilities.text_document_save_include_text = false
---         resolved_capabilities.text_document_will_save = false
---         resolved_capabilities.text_document_will_save_wait_until = false
---         resolved_capabilities.type_definition = false
---         resolved_capabilities.workspace_folder_properties = {
---             changeNotifications = false,
---             supported = false
---           }
---         resolved_capabilities.workspace_symbol = false
---       end
--- }
-
-
--- Default color scheme is guaranteed to work but I like gruvbox better
--- lvim.colorscheme = "spacegray"
 
 -- Uncomment this to use our familiar friend gruvbox
 lvim.colorscheme = "gruvbox-flat"
@@ -130,3 +52,60 @@ require('rust-tools').setup({})
 -- SimpylFold configuration
 -- Fold/unfold with tab instead of zo/zc
 vim.api.nvim_set_keymap('n', '<tab>', 'za', {noremap = true})
+
+-- generic LSP settings
+
+-- ---@usage disable automatic installation of servers
+-- lvim.lsp.automatic_servers_installation = false
+
+-- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
+-- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
+-- vim.list_extend(lvim.lsp.override, { "pyright" })
+
+-- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
+-- local opts = {} -- check the lspconfig documentation for a list of all possible options
+-- require("lvim.lsp.manager").setup("pylsp", opts)
+
+-- -- you can set a custom on_attach function that will be used for all the language servers
+-- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
+-- lvim.lsp.on_attach_callback = function(client, bufnr)
+--   local function buf_set_option(...)
+--     vim.api.nvim_buf_set_option(bufnr, ...)
+--   end
+--   --Enable completion triggered by <c-x><c-o>
+--   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+-- end
+
+-- -- set a formatter, this will override the language server formatting capabilities (if it exists)
+-- local formatters = require "lvim.lsp.null-ls.formatters"
+-- formatters.setup {
+--   { command = "black", filetypes = { "python" } },
+--   { command = "isort", filetypes = { "python" } },
+--   {
+--     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+--     command = "prettier",
+--     ---@usage arguments to pass to the formatter
+--     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+--     extra_args = { "--print-with", "100" },
+--     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+--     filetypes = { "typescript", "typescriptreact" },
+--   },
+-- }
+
+-- -- set additional linters
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   { command = "flake8", filetypes = { "python" } },
+--   {
+--     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+--     command = "shellcheck",
+--     ---@usage arguments to pass to the formatter
+--     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+--     extra_args = { "--severity", "warning" },
+--   },
+--   {
+--     command = "codespell",
+--     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+--     filetypes = { "javascript", "python" },
+--   },
+-- }
