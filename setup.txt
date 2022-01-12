@@ -1,0 +1,37 @@
+1. Create ssh key and register with gh
+
+    ssh-keygen -t ed25519 -C <email>
+
+2. Set up .ssh config for each domain
+
+3. Clone config repo: https://github.com/jdginn/cnfg
+
+4. Set up vim:
+
+    bash setup-vim.sh
+
+-------------- Ubuntu ------------
+
+5. Install things
+    - Add repository to get a modern version of nvim:
+        sudo add-apt-repository ppa:neovim-ppa/unstable
+    - nvim
+        sudo apt-get install nvim
+    - bat
+        sudo apt-get install bat
+    - ripgrep
+        sudo apt-get install ripgrep
+    - dust
+        sudo apt-get install dust
+    - npm
+        sudo apt-get install npm
+    - pip
+        sudo apt-get install pip
+    - go
+        sudo apt-get install golang
+    - cargo
+        sudo apt-get install cargo
+    - lunarvim
+        bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+    - tmux
+        sudo apt-get install tmux
