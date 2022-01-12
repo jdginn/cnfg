@@ -9,7 +9,7 @@ export PS1="\u@\h:[\w]:\n$ "
 #export PS1="[\w]:\n$ "
 
 #TODO: this should really be host-specific
-export PATH=$PATH:~/Library/Python/3.7/bin:/usr/local/bin
+export PATH=/usr/bin:/bin:~/.local/bin
 
 # vi mode for all bash functionality
 set -o vi
@@ -147,7 +147,8 @@ umask 0000
 if [ -f $HOME/.bashrc_aliases ]; then
     . $HOME/.bashrc_aliases
 fi
-. "$HOME/.cargo/env"
 
 # added by travis gem
 [ ! -s /Users/justinginn/.travis/travis.sh ] || source /Users/justinginn/.travis/travis.sh
+
+#. "$HOME/.cargo/env"
