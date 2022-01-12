@@ -16,5 +16,6 @@ return {
     {key="-", mods="CTRL", action="DecreaseFontSize"},
     {key="+", mods="CTRL", action="IncreaseFontSize"},
     {key="t", mods="SHIFT|ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"}},
-  }
+  },
+  audible_bell="Disabled"
 }
