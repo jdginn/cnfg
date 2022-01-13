@@ -22,7 +22,9 @@
     - ripgrep
         sudo apt-get install ripgrep
     - dust
-        sudo apt-get install dust
+        sudo apt update
+        sudo apt install snapd
+        sudo snap install dust
     - npm
         sudo apt-get install npm
     - pip
@@ -35,3 +37,7 @@
         bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
     - tmux
         sudo apt-get install tmux
+    - cmake
+        sudo apt-get install cmake
+    - unzip
+    - fzf
