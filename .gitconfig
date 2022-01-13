@@ -4,10 +4,10 @@
 	name = Justin Ginn
 	email = Justindavid.ginn@gmail.com
 [pager]
-    diff = bat
-    log = bat
-    reflog = bat
-    show = bat
+    diff = cat
+    log = less
+    reflog = cat
+    show = cat
 [delta]
     side-by-side = true
     syntax-theme = gruvbox-dark
