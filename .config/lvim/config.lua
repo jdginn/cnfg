@@ -13,11 +13,12 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
+
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.nvimtree.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.nvimtree.show_icons.git = 1
 
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -45,7 +46,6 @@ lvim.plugins = {
   -- {"tpope/vim-fugitive"}
 }
 
--- Uncomment this to use our familiar friend gruvbox
 lvim.colorscheme = "gruvbox-flat"
 vim.g.gruvbox_flat_style = "hard"
 
@@ -55,6 +55,47 @@ require('rust-tools').setup({})
 -- Fold/unfold with tab instead of zo/zc
 vim.api.nvim_set_keymap('n', '<tab>', 'za', {noremap = true})
 
+
+-- rsync on command
+function File_exists(name)
+  local f=io.open(name, "r")
+  if f ~=nil then io.close(f) return true else return false end
+end
+
+function Git_toplevel()
+  local cmd = "git -C " .. vim.fn.shellescape(vim.fn.getcwd()) .. " rev-parse --show-toplevel"
+  local res = vim.fn.system(cmd)
+  -- if string.startswith(res, "fatal:") then res = nil end
+  return string.gsub(res, '\n', '')
+end
+
+Project_config_file = Git_toplevel() .. "/project_config.lua"
+
+if File_exists(Project_config_file) then
+  Project_config = dofile(Project_config_file)
+else
+  Project_config = nil
+end
+
+function Rsync()
+  if Project_config == nil then
+    print("Cannot rsync because no project_config.lua was found")
+    return
+  end
+
+  local project_root = Git_toplevel()
+  local cmd = "rsync -r " .. vim.fn.shellescape(project_root) .. "/* " .. vim.fn.shellescape(Project_config.rsync_destination)
+  print(cmd)
+  vim.fn.system(cmd)
+end
+
+-- which_key bindings
+lvim.builtin.which_key.mappings["r"] = {
+  name = "Remote",
+  r = { function() Rsync() end, "Rsync"}
+}
+
+require('vim.lsp.log').set_format_func(vim.inspect)
 -- generic LSP settings
 
 -- ---@usage disable automatic installation of servers
