@@ -42,8 +42,8 @@ vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 lvim.plugins = {
   {"jdginn/gruvbox-flat.nvim"},
   {"tmhedberg/SimpylFold"},
-  {"simrat39/rust-tools.nvim"}
-  -- {"tpope/vim-fugitive"}
+  {"simrat39/rust-tools.nvim"},
+  {"tpope/vim-fugitive"}
 }
 
 lvim.colorscheme = "gruvbox-flat"
@@ -89,11 +89,15 @@ function Rsync()
   vim.fn.system(cmd)
 end
 
--- which_key bindings
+---- which_key bindings ----
+-- rsync
 lvim.builtin.which_key.mappings["r"] = {
   name = "Remote",
   r = { function() Rsync() end, "Rsync"}
 }
+
+-- git
+lvim.builtin.which_key.mappings["g"].a = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage Buffer" }
 
 require('vim.lsp.log').set_format_func(vim.inspect)
 -- generic LSP settings
