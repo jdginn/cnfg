@@ -8,6 +8,9 @@ lvim.format_on_save = false
 lvim.lint_on_save = true
 lvim.lsp.diagnostics.update_in_insert = false
 
+-- fix copy-paste
+vim.opt.mouse=""
+
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping
@@ -19,6 +22,7 @@ lvim.builtin.terminal.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.nvimtree.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
+lvim.builtin.dap.active = false
 
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -43,7 +47,10 @@ lvim.plugins = {
   {"jdginn/gruvbox-flat.nvim"},
   {"tmhedberg/SimpylFold"},
   {"simrat39/rust-tools.nvim"},
-  {"tpope/vim-fugitive"}
+  {"tpope/vim-fugitive"},
+  {"buoto/gotests-vim"},
+  {"puremourning/vimspector"},
+  {'lewis6991/spellsitter.nvim'}
 }
 
 lvim.colorscheme = "gruvbox-flat"
@@ -99,19 +106,25 @@ lvim.builtin.which_key.mappings["r"] = {
 -- git
 lvim.builtin.which_key.mappings["g"].a = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage Buffer" }
 
+-- generate tests
+-- TODO: for now this only works for go, eventually we can add other languages
+lvim.builtin.which_key.mappings["l"].t = {"<cmd> GoTestsAll <cr>", "Generate Tests"}
+
+-- smart spellchecking with TreeSitter
+require('spellsitter').setup()
+
+
+-- guideline for how long a line should be
+vim.api.nvim_exec('set colorcolumn=80', false)
+vim.api.nvim_exec('highlight ColorColumn ctermbg=DarkGrey ctermfg=white', false)
+
 require('vim.lsp.log').set_format_func(vim.inspect)
 -- generic LSP settings
 
--- ---@usage disable automatic installation of servers
--- lvim.lsp.automatic_servers_installation = false
-
--- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
--- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
--- vim.list_extend(lvim.lsp.override, { "pyright" })
-
--- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
--- local opts = {} -- check the lspconfig documentation for a list of all possible options
--- require("lvim.lsp.manager").setup("pylsp", opts)
+---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
+-- local opts = {filetypes = {"c", "cpp", "objc", "objcpp", ".cu", ".cuh", ".inl"}} -- check the lspconfig documentation for a list of all possible options
+local opts = {filetypes = {"c", "cpp", "objc", "objcpp", "cuda"}} -- check the lspconfig documentation for a list of all possible options
+require("lvim.lsp.manager").setup("clangd", opts)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
