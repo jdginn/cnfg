@@ -85,6 +85,8 @@ function branch_recent {
 for branch in `git branch | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r
 }
 
+alias test_all_commits='git rebase -i origin/main --exec "git show $(more $(git rev-parse --git-path REBASE_HEAD)) --name-only; make check"'
+
 # Use rsync to sync local contents to a remote clone
 # Because rsync only copies diffs between files, it's the fastest way
 function reposync {
