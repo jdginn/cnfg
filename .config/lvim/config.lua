@@ -17,12 +17,12 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
 
-lvim.builtin.dashboard.active = true
+lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.notify.active = true
-lvim.builtin.nvimtree.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 1
-lvim.builtin.dap.active = false
+-- lvim.builtin.nvimtree.side = "left"
+-- lvim.builtin.nvimtree.show_icons.git = 1
+-- lvim.builtin.dap.active = false
 
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
