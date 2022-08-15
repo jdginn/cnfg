@@ -1,6 +1,6 @@
 -- Debug
 P = function(v)
-    print(vim.inspect(v))
+  print(vim.inspect(v))
 end
 
 -- general
@@ -9,7 +9,7 @@ lvim.lint_on_save = true
 lvim.lsp.diagnostics.update_in_insert = false
 
 -- fix copy-paste
-vim.opt.mouse=""
+vim.opt.mouse = ""
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -20,9 +20,6 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.notify.active = true
--- lvim.builtin.nvimtree.side = "left"
--- lvim.builtin.nvimtree.show_icons.git = 1
--- lvim.builtin.dap.active = false
 
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
@@ -30,7 +27,6 @@ lvim.builtin.treesitter.ensure_installed = {
   "cpp",
   "go",
   "json",
-  "lua",
   "python",
   "rust",
   "yaml",
@@ -44,13 +40,16 @@ vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 
 -- Additional Plugins
 lvim.plugins = {
-  {"jdginn/gruvbox-flat.nvim"},
-  {"tmhedberg/SimpylFold"},
-  {"simrat39/rust-tools.nvim"},
-  {"tpope/vim-fugitive"},
-  {"buoto/gotests-vim"},
-  {"puremourning/vimspector"},
-  {'lewis6991/spellsitter.nvim'}
+  { "jdginn/gruvbox-flat.nvim" },
+  { "tmhedberg/SimpylFold" },
+  { "simrat39/rust-tools.nvim" },
+  { "buoto/gotests-vim" },
+  { "puremourning/vimspector" },
+  { 'lewis6991/spellsitter.nvim' },
+  { "ray-x/go.nvim" },
+  { "ray-x/guihua.lua" },
+  { "ThePrimeagen/refactoring.nvim" },
+  { "sindrets/diffview.nvim" },
 }
 
 lvim.colorscheme = "gruvbox-flat"
@@ -60,13 +59,13 @@ require('rust-tools').setup({})
 
 -- SimpylFold configuration
 -- Fold/unfold with tab instead of zo/zc
-vim.api.nvim_set_keymap('n', '<tab>', 'za', {noremap = true})
+vim.api.nvim_set_keymap('n', '<tab>', 'za', { noremap = true })
 
 
 -- rsync on command
 function File_exists(name)
-  local f=io.open(name, "r")
-  if f ~=nil then io.close(f) return true else return false end
+  local f = io.open(name, "r")
+  if f ~= nil then io.close(f) return true else return false end
 end
 
 function Git_toplevel()
@@ -91,27 +90,92 @@ function Rsync()
   end
 
   local project_root = Git_toplevel()
-  local cmd = "rsync -r " .. vim.fn.shellescape(project_root) .. "/* " .. vim.fn.shellescape(Project_config.rsync_destination)
+  local cmd = "rsync -r " ..
+      vim.fn.shellescape(project_root) .. "/* " .. vim.fn.shellescape(Project_config.rsync_destination)
   print(cmd)
   vim.fn.system(cmd)
 end
 
----- which_key bindings ----
--- rsync
-lvim.builtin.which_key.mappings["r"] = {
+lvim.builtin.which_key.mappings["R"] = {
   name = "Remote",
-  r = { function() Rsync() end, "Rsync"}
+  r = { function() Rsync() end, "Rsync" }
 }
 
--- git
-lvim.builtin.which_key.mappings["g"].a = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage Buffer" }
+-- go
+require('go').setup({
+  max_line_len = 110,
+  gotests_template = "testify",
+})
+require('go.format').goimport()
+lvim.builtin.which_key.mappings["o"] = {
+  name = "Go",
+  t = {
+    p = { "<cmd> GoTestPkg -t testing <CR>", "Test package" },
+    f = { "<cmd> GoTestFunc -t testing <CR>", "Test this function" },
+    F = { "<cmd> GoTestFile -t testing <CR>", "Test this file" },
+    a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
+  },
+  f = {
+    s = { "<cmd> GoFillStruct <CR>", "Autofill struct" },
+    w = { "<cmd> GoFillSwitch <CR>", "Autofill switch" },
+  },
+  c = { "<cmd> GoCoverage -t testing <CR>", "Show Coverage" },
+  d = { "<cmd> GoDoc <CR>", "GoDoc" },
+  l = { "<cmd> GoLint <CR>", "Lint" },
+  o = { "<cmd> GoPkgOutline <CR>", "Package Outline" },
+  i = { "<cmd> GoImport <CR>", "Organize Imports" },
+  I = { "<cmd> GoImpl <CR>", "Implement Interface" },
+  j = { "<cmd> GoAlt! <CR>", "Alternate test file" },
+  e = { "<cmd> GoIfErr <CR>", "Add if err" },
+}
 
--- generate tests
--- TODO: for now this only works for go, eventually we can add other languages
-lvim.builtin.which_key.mappings["l"].t = {"<cmd> GoTestsAll <cr>", "Generate Tests"}
+-- refactoring
+require("refactoring").setup({
+  prompt_func_return_type = {
+    go = true
+  },
+  prompt_func_param_type = {
+    go = true
+  },
+})
+
+vim.api.nvim_set_keymap("v", "re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
+  { noremap = true, silent = true, expr = false })
+vim.api.nvim_set_keymap("v", "rf",
+  [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
+  { noremap = true, silent = true, expr = false })
+vim.api.nvim_set_keymap("v", "rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]],
+  { noremap = true, silent = true, expr = false })
+vim.api.nvim_set_keymap("v", "ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+  { noremap = true, silent = true, expr = false })
+
+-- Extract block doesn't need visual mode
+vim.api.nvim_set_keymap("n", "rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]],
+  { noremap = true, silent = true, expr = false })
+vim.api.nvim_set_keymap("n", "rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]],
+  { noremap = true, silent = true, expr = false })
+
+-- Inline variable can also pick up the identifier currently under the cursor without visual mode
+vim.api.nvim_set_keymap("n", "ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+  { noremap = true, silent = true, expr = false })
+
+---- which_key bindings ----
+
+-- git
+lvim.builtin.which_key.mappings["g"] = {
+  a = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage Buffer" },
+}
+lvim.builtin.which_key.mappings["G"] = {
+  name = "GitDiff",
+  d = { "<cmd> DiffviewFileHistory <cr>", "Open Diffview" },
+  c = { "<cmd> DiffviewClose <cr>", "Close Diffview" },
+  f = { "<cmd> DiffviewToggleFiles <cr>", "Open Files toolbar" },
+}
 
 -- smart spellchecking with TreeSitter
-require('spellsitter').setup()
+require('spellsitter').setup {
+  enable = { ".txt", ".md" }
+}
 
 
 -- guideline for how long a line should be
@@ -123,49 +187,5 @@ require('vim.lsp.log').set_format_func(vim.inspect)
 
 ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 -- local opts = {filetypes = {"c", "cpp", "objc", "objcpp", ".cu", ".cuh", ".inl"}} -- check the lspconfig documentation for a list of all possible options
-local opts = {filetypes = {"c", "cpp", "objc", "objcpp", "cuda"}} -- check the lspconfig documentation for a list of all possible options
 require("lvim.lsp.manager").setup("clangd", opts)
-
--- -- you can set a custom on_attach function that will be used for all the language servers
--- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
-
--- -- set a formatter, this will override the language server formatting capabilities (if it exists)
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   { command = "black", filetypes = { "python" } },
---   { command = "isort", filetypes = { "python" } },
---   {
---     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "prettier",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--print-with", "100" },
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
-
--- -- set additional linters
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "shellcheck",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--severity", "warning" },
---   },
---   {
---     command = "codespell",
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "javascript", "python" },
---   },
--- }
+local opts = { filetypes = { "c", "cpp", "objc", "objcpp", "cuda" } } -- check the lspconfig documentation for a list of all possible options
