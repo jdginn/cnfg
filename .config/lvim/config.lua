@@ -50,8 +50,13 @@ lvim.plugins = {
   { "ray-x/guihua.lua" },
   { "ThePrimeagen/refactoring.nvim" },
   { "sindrets/diffview.nvim" },
+  { "akinsho/git-conflict.nvim", tag = "*" },
+  -- { "Pocco81/dap-buddy.nvim", tag = "*" },
+  { "rcarriga/nvim-dap-ui", tag = "*" },
+  { "theHamsta/nvim-dap-virtual-text", tag = "*" },
 }
 
+-- Colorscheme
 lvim.colorscheme = "gruvbox-flat"
 vim.g.gruvbox_flat_style = "hard"
 
@@ -60,6 +65,25 @@ require('rust-tools').setup({})
 -- SimpylFold configuration
 -- Fold/unfold with tab instead of zo/zc
 vim.api.nvim_set_keymap('n', '<tab>', 'za', { noremap = true })
+
+-- DAP
+lvim.builtin.dap.active = true
+lvim.builtin.which_key.mappings["d"] = {
+  name = "Debug",
+  t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+  b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
+  c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+  C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
+  d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
+  g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
+  i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+  o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+  u = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
+  p = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
+  r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
+  s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
+  q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
+}
 
 
 -- rsync on command
@@ -104,23 +128,42 @@ lvim.builtin.which_key.mappings["R"] = {
 -- go
 require('go').setup({
   max_line_len = 110,
+  test_runner = "richgo",
+  run_in_floaterm = true,
   gotests_template = "testify",
+  dap_debug = true,
+  dap_debug_gui = true,
 })
 require('go.format').goimport()
 lvim.builtin.which_key.mappings["o"] = {
   name = "Go",
   t = {
+    name = "Test",
     p = { "<cmd> GoTestPkg -t testing <CR>", "Test package" },
     f = { "<cmd> GoTestFunc -t testing <CR>", "Test this function" },
     F = { "<cmd> GoTestFile -t testing <CR>", "Test this file" },
     a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
+    D = { "<cmd> lua _GO_NVIM_CFG.test_runner='dlv'<CR> ", "Switch to dlv" },
+    R = { "<cmd> lua _GO_NVIM_CFG.test_runner='richgo'<CR> ", "Switch to richgo" },
+  },
+  d = {
+    name = "Debug",
+    l = { "<cmd> GoDebug <CR>", "Launch" },
+    b = { "<cmd> GoBreakToggle <CR>", "Breakpoint" },
+    B = { "<cmd> BreakCondition <CR>", "Break Condition" },
+    r = { "<cmd> ReplToggle <CR>", "Toggle Repl" },
+    -- s = { "<cmd> GoDbgStep <CR>", "Step" },
+    -- c = { "<cmd> GoDbgContinue <CR>", "Continue" },
+    q = { "<cmd> GoDbgStop <CR>", "Stop" },
+    k = { "<cmd> GoDbgKeys <CR>", "Show Map" },
   },
   f = {
+    name = "fill",
     s = { "<cmd> GoFillStruct <CR>", "Autofill struct" },
     w = { "<cmd> GoFillSwitch <CR>", "Autofill switch" },
   },
   c = { "<cmd> GoCoverage -t testing <CR>", "Show Coverage" },
-  d = { "<cmd> GoDoc <CR>", "GoDoc" },
+  D = { "<cmd> GoDoc <CR>", "GoDoc" },
   l = { "<cmd> GoLint <CR>", "Lint" },
   o = { "<cmd> GoPkgOutline <CR>", "Package Outline" },
   i = { "<cmd> GoImport <CR>", "Organize Imports" },
@@ -171,6 +214,25 @@ lvim.builtin.which_key.mappings["G"] = {
   c = { "<cmd> DiffviewClose <cr>", "Close Diffview" },
   f = { "<cmd> DiffviewToggleFiles <cr>", "Open Files toolbar" },
 }
+
+require("git-conflict").configuration = {
+  default_mappings = true, -- disable buffer local mapping created by this plugin
+  disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+  highlights = { -- They must have background color, otherwise the default color will be used
+    incoming = 'DiffText',
+    current = 'DiffAdd',
+  }
+}
+
+vim.keymap.set('n', 'co', '<Plug>(git-conflict-ours)')
+vim.keymap.set('n', 'ct', '<Plug>(git-conflict-theirs)')
+vim.keymap.set('n', 'cb', '<Plug>(git-conflict-both)')
+vim.keymap.set('n', 'c0', '<Plug>(git-conflict-none)')
+vim.keymap.set('n', ']x', '<Plug>(git-conflict-prev-conflict)')
+vim.keymap.set('n', '[x', '<Plug>(git-conflict-next-conflict)')
+vim.keymap.set('n', 'cl', '<Plug>(git-conflict-list-qf)')
+
+require("git-conflict").setup()
 
 -- smart spellchecking with TreeSitter
 require('spellsitter').setup {
