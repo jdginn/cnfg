@@ -206,9 +206,6 @@ require("refactoring").setup({
 ---- which_key bindings ----
 
 -- git
-lvim.builtin.which_key.mappings["g"] = {
-  a = { "<cmd>lua require 'gitsigns'.stage_buffer()<cr>", "Stage Buffer" },
-}
 lvim.builtin.which_key.mappings["G"] = {
   name = "GitDiff",
   d = { "<cmd> DiffviewFileHistory <cr>", "Open Diffview" },
