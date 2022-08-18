@@ -41,17 +41,16 @@ vim.api.nvim_command("set foldexpr=nvim_treesitter#foldexpr()")
 -- Additional Plugins
 lvim.plugins = {
   { "jdginn/gruvbox-flat.nvim" },
-  { "tmhedberg/SimpylFold" },
   { "simrat39/rust-tools.nvim" },
-  { "buoto/gotests-vim" },
-  { "puremourning/vimspector" },
+  { "tmhedberg/SimpylFold" },
+  -- { "buoto/gotests-vim" },
   { 'lewis6991/spellsitter.nvim' },
+  { "tpope/vim-fugitive" },
   { "ray-x/go.nvim" },
   { "ray-x/guihua.lua" },
   { "ThePrimeagen/refactoring.nvim" },
   { "sindrets/diffview.nvim" },
   { "akinsho/git-conflict.nvim", tag = "*" },
-  -- { "Pocco81/dap-buddy.nvim", tag = "*" },
   { "rcarriga/nvim-dap-ui", tag = "*" },
   { "theHamsta/nvim-dap-virtual-text", tag = "*" },
 }
@@ -129,6 +128,7 @@ lvim.builtin.which_key.mappings["R"] = {
 require('go').setup({
   max_line_len = 110,
   test_runner = "richgo",
+  -- build_tags = "testing",
   run_in_floaterm = true,
   gotests_template = "testify",
   dap_debug = true,
@@ -139,12 +139,13 @@ lvim.builtin.which_key.mappings["o"] = {
   name = "Go",
   t = {
     name = "Test",
-    p = { "<cmd> GoTestPkg -t testing <CR>", "Test package" },
-    f = { "<cmd> GoTestFunc -t testing <CR>", "Test this function" },
-    F = { "<cmd> GoTestFile -t testing <CR>", "Test this file" },
+    p = { "<cmd> GoTestPkg -t testing <CR> --build-flags testing", "Test package" },
+    f = { "<cmd> GoTestFunc -t testing <CR> --build-flags testing", "Test this function" },
+    F = { "<cmd> GoTestFile -t testing --build-flags testing<CR>", "Test this file" },
     a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
     D = { "<cmd> lua _GO_NVIM_CFG.test_runner='dlv'<CR> ", "Switch to dlv" },
     R = { "<cmd> lua _GO_NVIM_CFG.test_runner='richgo'<CR> ", "Switch to richgo" },
+    G = { "<cmd> lua _GO_NVIM_CFG.test_runner='gotesting'<CR> ", "Switch to vanilla go" },
   },
   d = {
     name = "Debug",
@@ -182,25 +183,25 @@ require("refactoring").setup({
   },
 })
 
-vim.api.nvim_set_keymap("v", "re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
-  { noremap = true, silent = true, expr = false })
-vim.api.nvim_set_keymap("v", "rf",
-  [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
-  { noremap = true, silent = true, expr = false })
-vim.api.nvim_set_keymap("v", "rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]],
-  { noremap = true, silent = true, expr = false })
-vim.api.nvim_set_keymap("v", "ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
-  { noremap = true, silent = true, expr = false })
+-- vim.api.nvim_set_keymap("v", "re", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
+--   { noremap = true, silent = true, expr = false })
+-- vim.api.nvim_set_keymap("v", "rf",
+--   [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
+--   { noremap = true, silent = true, expr = false })
+-- vim.api.nvim_set_keymap("v", "rv", [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]],
+--   { noremap = true, silent = true, expr = false })
+-- vim.api.nvim_set_keymap("v", "ri", [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+--   { noremap = true, silent = true, expr = false })
 
--- Extract block doesn't need visual mode
-vim.api.nvim_set_keymap("n", "rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]],
-  { noremap = true, silent = true, expr = false })
-vim.api.nvim_set_keymap("n", "rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]],
-  { noremap = true, silent = true, expr = false })
+-- -- Extract block doesn't need visual mode
+-- vim.api.nvim_set_keymap("n", "rb", [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]],
+--   { noremap = true, silent = true, expr = false })
+-- vim.api.nvim_set_keymap("n", "rbf", [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]],
+--   { noremap = true, silent = true, expr = false })
 
--- Inline variable can also pick up the identifier currently under the cursor without visual mode
-vim.api.nvim_set_keymap("n", "ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
-  { noremap = true, silent = true, expr = false })
+-- -- Inline variable can also pick up the identifier currently under the cursor without visual mode
+-- vim.api.nvim_set_keymap("n", "ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+--   { noremap = true, silent = true, expr = false })
 
 ---- which_key bindings ----
 
