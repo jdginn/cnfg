@@ -9,7 +9,10 @@ lvim.lint_on_save = true
 lvim.lsp.diagnostics.update_in_insert = false
 
 -- fix copy-paste
+vim.opt.clipboard = "unnamedplus"
 vim.opt.mouse = ""
+vim.keymap.set("n", '<Leader>y', '"+y')
+vim.keymap.set("v", '<Leader>y', '"+y')
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -50,9 +53,9 @@ lvim.plugins = {
   { "ray-x/guihua.lua" },
   { "ThePrimeagen/refactoring.nvim" },
   { "sindrets/diffview.nvim" },
-  { "akinsho/git-conflict.nvim", tag = "*" },
-  { "rcarriga/nvim-dap-ui", tag = "*" },
-  { "theHamsta/nvim-dap-virtual-text", tag = "*" },
+  { "akinsho/git-conflict.nvim" },
+  { "rcarriga/nvim-dap-ui" },
+  { "theHamsta/nvim-dap-virtual-text" },
 }
 
 -- Colorscheme
@@ -127,8 +130,8 @@ lvim.builtin.which_key.mappings["R"] = {
 -- go
 require('go').setup({
   max_line_len = 110,
-  test_runner = "richgo",
-  -- build_tags = "testing",
+  test_runner = "go",
+  build_tags = "testing",
   run_in_floaterm = true,
   gotests_template = "testify",
   dap_debug = true,
@@ -139,13 +142,13 @@ lvim.builtin.which_key.mappings["o"] = {
   name = "Go",
   t = {
     name = "Test",
-    p = { "<cmd> GoTestPkg -t testing <CR> --build-flags testing", "Test package" },
-    f = { "<cmd> GoTestFunc -t testing <CR> --build-flags testing", "Test this function" },
-    F = { "<cmd> GoTestFile -t testing --build-flags testing<CR>", "Test this file" },
+    p = { "<cmd> GoTestPkg <CR>", "Test package" },
+    f = { "<cmd> GoTestFunc <CR>", "Test this function" },
+    F = { "<cmd> GoTestFile <CR>", "Test this file" },
     a = { "<cmd> GoAddTest -template=testify<CR>", "Add test for this function" },
     D = { "<cmd> lua _GO_NVIM_CFG.test_runner='dlv'<CR> ", "Switch to dlv" },
     R = { "<cmd> lua _GO_NVIM_CFG.test_runner='richgo'<CR> ", "Switch to richgo" },
-    G = { "<cmd> lua _GO_NVIM_CFG.test_runner='gotesting'<CR> ", "Switch to vanilla go" },
+    G = { "<cmd> lua _GO_NVIM_CFG.test_runner='go'<CR> ", "Switch to vanilla go" },
   },
   d = {
     name = "Debug",
@@ -247,5 +250,5 @@ require('vim.lsp.log').set_format_func(vim.inspect)
 
 ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 -- local opts = {filetypes = {"c", "cpp", "objc", "objcpp", ".cu", ".cuh", ".inl"}} -- check the lspconfig documentation for a list of all possible options
-require("lvim.lsp.manager").setup("clangd", opts)
 local opts = { filetypes = { "c", "cpp", "objc", "objcpp", "cuda" } } -- check the lspconfig documentation for a list of all possible options
+require("lvim.lsp.manager").setup("clangd", opts)
