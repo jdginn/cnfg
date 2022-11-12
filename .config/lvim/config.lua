@@ -56,6 +56,7 @@ lvim.plugins = {
   { "akinsho/git-conflict.nvim" },
   { "rcarriga/nvim-dap-ui" },
   { "theHamsta/nvim-dap-virtual-text" },
+  { "jose-elias-alvarez/null-ls.nvim" },
 }
 
 -- Colorscheme
@@ -128,6 +129,17 @@ lvim.builtin.which_key.mappings["R"] = {
 }
 
 -- go
+-- local linters = require "lvim.lsp.null-ls.linters"
+-- linters.setup {
+--   {
+--     command = "golangci-lint",
+--     filetypes = { "go" },
+--   },
+-- }
+
+-- Take some language servers off the block list
+lvim.lsp.automatic_configuration.skipped_servers = { "ccls" }
+
 require('go').setup({
   max_line_len = 110,
   test_runner = "go",
