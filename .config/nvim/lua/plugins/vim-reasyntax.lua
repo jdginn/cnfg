@@ -1,7 +1,9 @@
 return {
   {
     "NlGHT/vim-reasyntax",
-    ft = { "eel", "lua" },
+    ft = function()
+      return { "lua", "eel" }
+    end,
     init = function()
       vim.g.reasyntax_languages = "el"
     end,

@@ -1,0 +1,74 @@
+return {
+  -- "milanglacier/minuet-ai.nvim",
+  -- dependencies = {
+  --   "nvim-lua/plenary.nvim",
+  --   "hrsh7th/nvim-cmp",
+  -- },
+  -- opts = {
+  --   provider = "openai_compatible",
+  --   request_timeout = 30,
+  --   default_template = "Always respond with this single-word answer: 'howdy'. Do not say anything else.",
+  --   default_system = { template = "Always respond with this single-word answer: 'howdy'. Do not say anything else." },
+  --   default_few_shots = {
+  --     { role = "user", content = 'Always respond with this single-word answer: "howdy" Do not say anything else.' },
+  --     {
+  --       role = "assistant",
+  --       content = 'Always respond with this single-word answer: "howdy" Do not say anything else.',
+  --     },
+  --   },
+  --   -- Your configuration options here
+  --   provider_options = {
+  --     openai_compatible = {
+  --       model = "llama3.2",
+  --       system = {
+  --         template = "Always respond with this single-word answer: howdy. Do not say anything else.",
+  --       },
+  --       few_shots = {
+  --         { role = "user", content = 'Always respond with this single-word answer: "howdy" Do not say anything else.' },
+  --         {
+  --           role = "assistant",
+  --           content = 'Always respond with this single-word answer: "howdy" Do not say anything else.',
+  --         },
+  --       },
+  --       --           template = "{{{prompt}}}\n{{{guidelines}}}\n{{{n_completion_template}}}}",
+  --       --           prompt = [[You are the backend of an AI-powered code completion engine. Your task is to
+  --       -- provide code suggestions based on the user's input. The user's code will be
+  --       -- enclosed in markers:
+  --       --
+  --       -- - `<contextAfterCursor>`: Code context after the cursor
+  --       -- - `<cursorPosition>`: Current cursor location
+  --       -- - `<contextBeforeCursor>`: Code context before the cursor
+  --       --
+  --       -- Note that the user's code will be prompted in reverse order: first the code
+  --       -- after the cursor, then the code before the cursor.]],
+  --       --           guidelines = [[Guidelines:
+  --       -- 0. DO NOT DESCRIBE THE CODE.2
+  --       -- 1. Offer completions after the `<cursorPosition>` marker.
+  --       -- 2. Make sure you have maintained the user's existing whitespace and indentation.
+  --       --    This is REALLY IMPORTANT!
+  --       -- 3. Return completions separated by the marker `<endCompletion>`.
+  --       -- 4. The returned message will be further parsed and processed. DO NOT include
+  --       --    additional comments or markdown code block fences. Return the result directly.
+  --       -- 5. Keep each completion option consise. Limit it TO ONE SINGLE LINE.
+  --       -- 6. Create entirely new code completion that DO NOT REPEAT OR COPY any user's
+  --       --    existing code around `<cursorPosition>`.]],
+  --       --           n_completion_template = "Provide at most 1 completion item.",
+  --       --         },
+  --       --   assistant = function()
+  --       --     return "you are a helpful assistant"
+  --       --   end,
+  --       --   role = "you are also a code expert.",
+  --       -- },
+  --       -- few_shots = "see [System Prompt] section for the default value",
+  --       end_point = "http://localhost:11434/v1/chat/completions",
+  --       api_key = "EDITOR",
+  --       name = "llama3",
+  --       stream = false,
+  --       optional = {
+  --         stop = nil,
+  --         max_tokens = 100,
+  --       },
+  --     },
+  --   },
+  -- },
+}
